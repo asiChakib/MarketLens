@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f7f8">
+    <meta name="description" content="Explore historical market performance and risk metrics with MarketLens.">
+    <title>MarketLens — Historical market analytics</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="/static/app.js" defer></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="MarketLens home">
+          <span class="brand-mark" aria-hidden="true">M</span>
+          <span>Market<span class="brand-light">Lens</span></span>
+        </a>
+        <a class="docs-link" href="/docs">API documentation <span aria-hidden="true">↗</span></a>
+      </header>
+
+      <main>
+        <section class="intro" aria-labelledby="page-title">
+          <div>
+            <p class="eyebrow">HISTORICAL MARKET ANALYTICS</p>
+            <h1 id="page-title">A clearer view of market risk.</h1>
+            <p class="intro-copy">Explore price history and performance metrics for the symbols in your dataset.</p>
+          </div>
+          <div class="selection-controls">
+            <div class="control-field">
+              <label for="dataset-select">Dataset</label>
+              <select id="dataset-select" disabled aria-describedby="dataset-hint">
+                <option value="">Loading datasets…</option>
+              </select>
+              <span id="dataset-hint" class="visually-hidden">Choose a CSV dataset to explore.</span>
+            </div>
+            <div class="control-field">
+              <label for="symbol-search">Add stock to comparison</label>
+              <div class="symbol-add-row">
+                <div class="search-input-shell">
+                  <input id="symbol-search" type="search" list="symbol-options" placeholder="Search symbols…" autocomplete="off" disabled aria-describedby="symbol-hint">
+                  <span class="search-chevron" aria-hidden="true">⌄</span>
+                </div>
+                <button id="add-symbol-button" class="button button-add" type="button" disabled>Add</button>
+              </div>
+              <datalist id="symbol-options"></datalist>
+              <div id="selected-stocks" class="selected-stocks" aria-label="Stocks shown in the comparison"></div>
+              <span id="symbol-hint" class="visually-hidden">Type a symbol, choose it from the suggestions, then press Add. Add as many stocks as you want to compare.</span>
+            </div>
+          </div>
+        </section>
+
+        <section id="dashboard-content" aria-live="polite" aria-busy="false">
+          <div id="error-panel" class="error-panel" role="alert" hidden>
+            <div>
+              <strong id="error-title">We couldn’t load this view.</strong>
+              <p id="error-message">Check your connection and try again.</p>
+            </div>
+            <button id="retry-button" class="button button-secondary" type="button">Try again</button>
+          </div>
+
+          <section id="metrics-panels" class="metrics-panels" aria-label="Performance and risk metrics"></section>
+
+          <section class="chart-card" aria-labelledby="chart-title">
+            <div class="chart-header">
+              <div>
+                <p class="eyebrow">PRICE HISTORY</p>
+                <h2 id="chart-title">Closing price <span id="chart-symbol"></span></h2>
+                <p class="chart-explainer">Daily closing prices within the selected date window.</p>
+              </div>
+              <div class="chart-tools">
+                <p id="date-range" class="date-range">Historical observations</p>
+                <div class="period-buttons" role="group" aria-label="Chart date window">
+                  <button type="button" data-period="1m" aria-pressed="false">1M</button>
+                  <button type="button" data-period="3m" aria-pressed="false">3M</button>
+                  <button type="button" data-period="6m" aria-pressed="false">6M</button>
+                  <button type="button" data-period="1y" aria-pressed="false">1Y</button>
+                  <button type="button" data-period="3y" aria-pressed="false">3Y</button>
+                  <button type="button" data-period="all" aria-pressed="true">All</button>
+                  <button type="button" data-period="custom" aria-pressed="false">Custom</button>
+                </div>
+                <form id="custom-range" class="custom-range" hidden>
+                  <label>From <input id="range-start" type="date"></label>
+                  <label>To <input id="range-end" type="date"></label>
+                  <button class="button button-secondary" type="submit">Apply</button>
+                  <span id="range-error" role="status"></span>
+                </form>
+              </div>
+            </div>
+            <div id="chart-loading" class="chart-loading" hidden>
+              <span class="spinner" aria-hidden="true"></span> Loading price history…
+            </div>
+            <div id="chart-empty" class="chart-empty" hidden>No historical price observations are available for this symbol.</div>
+            <div id="chart-wrap" class="chart-wrap">
+              <svg id="price-chart" class="price-chart" viewBox="0 0 900 360" role="img" aria-label="Historical closing price comparison by date"></svg>
+            </div>
+          </section>
+        </section>
+
+        <aside class="data-note">
+          <span class="note-icon" aria-hidden="true">◷</span>
+          <p><strong>Historical analysis</strong> — Metrics are calculated from the closing prices in the selected local CSV dataset. They are not live market data or investment advice. <a href="/docs">Learn about the API</a>.</p>
+        </aside>
+      </main>
+
+      <footer class="footer"><span>MarketLens</span><span>Historical data · Price return only</span></footer>
+    </div>
+  </body>
+</html>

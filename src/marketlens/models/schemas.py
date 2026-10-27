@@ -10,6 +10,26 @@ class SymbolsResponse(BaseModel):
     symbols: list[str]
 
 
+class DatasetOption(BaseModel):
+    id: str
+    name: str
+
+
+class DatasetsResponse(BaseModel):
+    datasets: list[DatasetOption]
+    default_dataset: str
+
+
+class PriceObservation(BaseModel):
+    date: str
+    close: float = Field(gt=0)
+
+
+class PricesResponse(BaseModel):
+    symbol: str
+    prices: list[PriceObservation]
+
+
 class AnalyticsResponse(BaseModel):
     model_config = ConfigDict(extra="forbid")
 

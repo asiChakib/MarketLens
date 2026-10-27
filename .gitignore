@@ -10,3 +10,4 @@ build/
 .env
 SPECIFICATION.md
 DOCS.md
+scripts/download_nasdaq100_data.py
